@@ -5,12 +5,12 @@ namespace ZooManagement.Models.Database
 {
     public enum Classification
     {
-        Mammal,
-        Reptile,
-        Bird,
-        Insect,
-        Fish,
-        Invertebrate,
+        Mammal = 0,
+        Reptile = 1,
+        Bird = 2,
+        Insect = 3,
+        Fish = 4,
+        Invertebrate = 5,
     }
     public class AnimalType
     {
