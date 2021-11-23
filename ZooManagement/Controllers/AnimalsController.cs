@@ -8,9 +8,9 @@ using Microsoft.Extensions.Logging;
 namespace ZooManagement.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    [Route("animals")]
+    public class AnimalsController : ControllerBase
     {
-       
+        
     }
 }
