@@ -37,6 +37,11 @@ namespace ZooManagement.Controllers
             {
                 return BadRequest(ModelState);
             }
+
+            if (!_animals.EnclosureHasSpace(newAnimal.EnclosureId))
+            {
+                return StatusCode(403, "Enclosure at max capacity");
+            }
             
             var animal = _animals.Create(newAnimal);
             var url = Url.Action("GetById", new {id = animal.Id});
