@@ -48,11 +48,18 @@ namespace ZooManagement
                 context.Enclosures.AddRange(enclosures);
                 context.SaveChanges();
             }
-            
+
             if (!context.Animals.Any())
             {
                 var animals = SampleAnimals.GetAnimals();
                 context.Animals.AddRange(animals);
+                context.SaveChanges();
+            }
+
+            if (!context.AnimalRecords.Any())
+            {
+                var records = SampleAnimalRecords.GetAnimalRecords();
+                context.AnimalRecords.AddRange(records);
                 context.SaveChanges();
             }
             

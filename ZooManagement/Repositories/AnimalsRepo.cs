@@ -16,6 +16,8 @@ namespace ZooManagement.Repositories
         IEnumerable<AnimalType> GetAnimalTypes(SearchRequest search);
         int CountAnimalTypes(SearchRequest search);
         bool EnclosureHasSpace(int enclosureId);
+        IEnumerable<AnimalRecord> GetAnimalRecords(SearchRequest search);
+        int CountAnimalRecords(SearchRequest search);
     }
 
     public class AnimalsRepo : IAnimalsRepo
@@ -113,5 +115,20 @@ namespace ZooManagement.Repositories
             var maxCapacity = _context.Enclosures.Single(e => e.Id == enclosureId).Capactity;
             return currentCapacity < maxCapacity;
         }
+
+        public IEnumerable<AnimalRecord> GetAnimalRecords(SearchRequest search)
+        {
+            return _context.AnimalRecords
+                .Include(a => a.AnimalType)
+                .OrderBy(a => a.Id)
+                .Skip((search.Page - 1) * search.PageSize)
+                .Take(search.PageSize);
+        }
+
+        public int CountAnimalRecords(SearchRequest search)
+        {
+            return _context.AnimalRecords.Count();
+        }
+
     }
 }

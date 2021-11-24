@@ -64,6 +64,14 @@ namespace ZooManagement.Controllers
             var animalTypesCount = _animals.CountAnimalTypes(searchRequest);
             return AnimalTypeListResponse.Create(searchRequest, animalTypes, animalTypesCount);
         }
+
+        [HttpGet("records")]
+        public ActionResult<AnimalRecordsListResponse> GetAnimalRecords([FromQuery] SearchRequest searchRequest)
+        {
+            var records = _animals.GetAnimalRecords(searchRequest);
+            var count = _animals.CountAnimalRecords(searchRequest);
+            return AnimalRecordsListResponse.Create(searchRequest, records, count);
+        }
         
     }
 }
