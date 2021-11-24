@@ -30,6 +30,21 @@ namespace ZooManagement.Controllers
             return AnimalListResponse.Create(searchRequest, animals, animalsCount);
         }
 
+        [HttpPost]
+        public IActionResult Create([FromBody] CreateAnimalRequest newAnimal)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            
+            var animal = _animals.Create(newAnimal);
+            var url = Url.Action("GetById", new {id = animal.Id});
+            var animalResponse = new AnimalResponse(animal);
+            return Created(url, animalResponse);
+
+        }
+
         [HttpGet("{id}")]
         public ActionResult<AnimalResponse> GetById([FromRoute] int id)
         {

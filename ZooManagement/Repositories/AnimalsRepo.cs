@@ -10,6 +10,7 @@ namespace ZooManagement.Repositories
     public interface IAnimalsRepo
     {
         Animal GetById(int id);
+        Animal Create(CreateAnimalRequest animal);
         int Count(AnimalSearchRequest search);
         IEnumerable<Animal> Search(AnimalSearchRequest search);
         IEnumerable<AnimalType> GetAnimalTypes(SearchRequest search);
@@ -30,6 +31,20 @@ namespace ZooManagement.Repositories
             return _context.Animals
                 .Include(a => a.AnimalType)
                 .Single(animal => animal.Id == id);
+        }
+
+        public Animal Create(CreateAnimalRequest animal)
+        {
+            var insertResult = _context.Animals.Add(new Animal
+            {
+                AnimalTypeId = animal.AnimalTypeId,
+                Name = animal.Name,
+                Sex = animal.Sex,
+                DOB = animal.DOB,
+                AcquisitionDate = animal.AcquisitionDate,
+            });
+            _context.SaveChanges();
+            return GetById(insertResult.Entity.Id);
         }
 
         public int Count(AnimalSearchRequest search)
