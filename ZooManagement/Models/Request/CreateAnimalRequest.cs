@@ -9,9 +9,12 @@ namespace ZooManagement.Models.Request
     public class CreateAnimalRequest
     {
         [Required] public int AnimalTypeId { get; set; }
+        [Required] public int EnclosureId { get; set; }
+
         [Required] public string Name { get; set; }
         [Required] public Sex Sex { get; set; }
         [Required] public DateTime DOB { get; set; }
+        
 
         [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]

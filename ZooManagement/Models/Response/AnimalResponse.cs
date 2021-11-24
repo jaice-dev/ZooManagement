@@ -27,5 +27,9 @@ namespace ZooManagement.Models.Response
         public Classification Classification => _animal.AnimalType.Classification;
 
         public string Species => _animal.AnimalType.Species;
+
+        public int EnclosureId => _animal.Enclosure.Id;
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public EnclosureType EnclosureType => _animal.Enclosure.EnclosureType;
     }
 }

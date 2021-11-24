@@ -33,7 +33,9 @@ namespace ZooManagement.Data
                 AcquisitionDate = GetAcquisitionDate(),
                 DOB = GetDateOfBirth(),
                 Sex = RandomEnumValue<Sex>(),
-                AnimalTypeId = _Random.Next(1, SampleAnimalTypes.GetAnimalTypes().Count())
+                AnimalTypeId = _Random.Next(1, SampleAnimalTypes.GetAnimalTypes().Count() + 1),
+                EnclosureId = _Random.Next(1, SampleEnclosures.GetEnclosures().Count() + 1)
+                //TODO Make sure cannot go over enclosure size
             };
         }
     }

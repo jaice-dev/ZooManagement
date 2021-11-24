@@ -31,10 +31,9 @@ namespace ZooManagement.Models.Request
         public Sex? Sex { get; set; }
         public int? BirthYear { get; set; }
         public int? AcquisitionYear { get; set; }
+        public int? EnclosureId { get; set; }
         
         
-        
-
         public override string Filters
         {
             get
@@ -46,8 +45,8 @@ namespace ZooManagement.Models.Request
                 if (Sex != null) filter += $"&sex={Sex}";
                 if (BirthYear != null) filter += $"&birthYear={BirthYear}";
                 if (AcquisitionYear != null) filter += $"&acquisitionYear={AcquisitionYear}";
-
-
+                if (EnclosureId != null) filter += $"&enclosure={EnclosureId}";
+                
                 return filter;
             }
         }

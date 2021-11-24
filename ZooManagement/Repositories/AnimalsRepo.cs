@@ -30,6 +30,7 @@ namespace ZooManagement.Repositories
         {
             return _context.Animals
                 .Include(a => a.AnimalType)
+                .Include(a => a.Enclosure)
                 .Single(animal => animal.Id == id);
         }
 
@@ -42,6 +43,7 @@ namespace ZooManagement.Repositories
                 Sex = animal.Sex,
                 DOB = animal.DOB,
                 AcquisitionDate = animal.AcquisitionDate,
+                EnclosureId = animal.EnclosureId,
             });
             _context.SaveChanges();
             return GetById(insertResult.Entity.Id);
@@ -51,11 +53,13 @@ namespace ZooManagement.Repositories
         {
             return _context.Animals
                 .Include(a => a.AnimalType)
+                .Include(a => a.Enclosure)
                 .Where(a => search.Name == null || a.Name.ToLower().Contains(search.Name))
                 .Where(a => search.Classification == null || a.AnimalType.Classification == search.Classification)
                 .Where(a => search.Sex == null || a.Sex == search.Sex)
                 .Where(a => search.BirthYear == null || a.DOB.Year == search.BirthYear)
                 .Where(a => search.AcquisitionYear == null || a.AcquisitionDate.Year == search.AcquisitionYear)
+                .Where(a => search.EnclosureId == null || a.Enclosure.Id == search.EnclosureId)
                 .Count(a => search.Species == null || a.AnimalType.Species.ToLower().Contains(search.Species));
         }
 
@@ -63,12 +67,14 @@ namespace ZooManagement.Repositories
         {
             return _context.Animals
                 .Include(a => a.AnimalType)
+                .Include(a => a.Enclosure)
                 .Where(a => search.Name == null || a.Name.ToLower().Contains(search.Name))
                 .Where(a => search.Classification == null || a.AnimalType.Classification == search.Classification)
                 .Where(a => search.Species == null || a.AnimalType.Species.ToLower().Contains(search.Species))
                 .Where(a => search.Sex == null || a.Sex == search.Sex)
                 .Where(a => search.BirthYear == null || a.DOB.Year == search.BirthYear)
                 .Where(a => search.AcquisitionYear == null || a.AcquisitionDate.Year == search.AcquisitionYear)
+                .Where(a => search.EnclosureId == null || a.Enclosure.Id == search.EnclosureId)
                 .OrderBy(a => a.AnimalType.Classification)
                 .Skip((search.Page - 1) * search.PageSize)
                 .Take(search.PageSize);
