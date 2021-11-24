@@ -21,6 +21,8 @@ namespace ZooManagement.Models.Database
         public AnimalType AnimalType { get; set; }
         public int EnclosureId { get; set; }
         public Enclosure Enclosure { get; set; }
+        public int KeeperId { get; set; }
+        public Keeper Keeper { get; set; }
         public string Name { get; set; }
         public Sex Sex { get; set; }
         public DateTime DOB { get; set; }

@@ -31,5 +31,8 @@ namespace ZooManagement.Models.Response
         public int EnclosureId => _animal.Enclosure.Id;
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public EnclosureType EnclosureType => _animal.Enclosure.EnclosureType;
+
+        public string Keeper => _animal.Keeper.Name;
+        public int KeeperId => _animal.Keeper.Id;
     }
 }

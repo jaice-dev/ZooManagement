@@ -5,6 +5,7 @@ using System.Linq;
 using ZooManagement.Models.Database;
 using static ZooManagement.Data.NameGenerator;
 using static ZooManagement.Data.DateGenerator;
+using static ZooManagement.Data.SampleKeepers;
 
 namespace ZooManagement.Data
 {
@@ -17,7 +18,7 @@ namespace ZooManagement.Data
         {
             return Enumerable.Range(0, NumberOfAnimals).Select(CreateRandomAnimal);
         }
-        
+
 
         static T RandomEnumValue<T>()
         {
@@ -27,6 +28,8 @@ namespace ZooManagement.Data
 
         private static Animal CreateRandomAnimal(int index)
         {
+            var enclosureId = _Random.Next(1, SampleEnclosures.GetEnclosures().Count() + 1); 
+
             return new Animal
             {
                 Name = GetName(),
@@ -34,7 +37,8 @@ namespace ZooManagement.Data
                 DOB = GetDateOfBirth(),
                 Sex = RandomEnumValue<Sex>(),
                 AnimalTypeId = _Random.Next(1, SampleAnimalTypes.GetAnimalTypes().Count() + 1),
-                EnclosureId = _Random.Next(1, SampleEnclosures.GetEnclosures().Count() + 1)
+                EnclosureId = enclosureId,
+                KeeperId = AssignKeepers(enclosureId),
                 //TODO Make sure cannot go over enclosure size
             };
         }

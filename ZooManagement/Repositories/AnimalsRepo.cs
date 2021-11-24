@@ -32,6 +32,7 @@ namespace ZooManagement.Repositories
             return _context.Animals
                 .Include(a => a.AnimalType)
                 .Include(a => a.Enclosure)
+                .Include(a => a.Keeper)
                 .Single(animal => animal.Id == id);
         }
 
@@ -45,6 +46,7 @@ namespace ZooManagement.Repositories
                 DOB = animal.DOB,
                 AcquisitionDate = animal.AcquisitionDate,
                 EnclosureId = animal.EnclosureId,
+                KeeperId = animal.KeeperId,
             });
             _context.SaveChanges();
             return GetById(insertResult.Entity.Id);
@@ -55,12 +57,14 @@ namespace ZooManagement.Repositories
             return _context.Animals
                 .Include(a => a.AnimalType)
                 .Include(a => a.Enclosure)
+                .Include(a => a.Keeper)
                 .Where(a => search.Name == null || a.Name.ToLower().Contains(search.Name))
                 .Where(a => search.Classification == null || a.AnimalType.Classification == search.Classification)
                 .Where(a => search.Sex == null || a.Sex == search.Sex)
                 .Where(a => search.BirthYear == null || a.DOB.Year == search.BirthYear)
                 .Where(a => search.AcquisitionYear == null || a.AcquisitionDate.Year == search.AcquisitionYear)
                 .Where(a => search.EnclosureId == null || a.Enclosure.Id == search.EnclosureId)
+                .Where(a => search.KeeperId == null || a.Keeper.Id == search.KeeperId)
                 .Count(a => search.Species == null || a.AnimalType.Species.ToLower().Contains(search.Species));
         }
 
@@ -69,6 +73,7 @@ namespace ZooManagement.Repositories
             return _context.Animals
                 .Include(a => a.AnimalType)
                 .Include(a => a.Enclosure)
+                .Include(a => a.Keeper)
                 .Where(a => search.Name == null || a.Name.ToLower().Contains(search.Name))
                 .Where(a => search.Classification == null || a.AnimalType.Classification == search.Classification)
                 .Where(a => search.Species == null || a.AnimalType.Species.ToLower().Contains(search.Species))
@@ -76,6 +81,7 @@ namespace ZooManagement.Repositories
                 .Where(a => search.BirthYear == null || a.DOB.Year == search.BirthYear)
                 .Where(a => search.AcquisitionYear == null || a.AcquisitionDate.Year == search.AcquisitionYear)
                 .Where(a => search.EnclosureId == null || a.Enclosure.Id == search.EnclosureId)
+                .Where(a => search.KeeperId == null || a.Keeper.Id == search.KeeperId)
                 .OrderBy(a => a.Enclosure.EnclosureType)
                 .ThenBy(a => a.Name)
                 .Skip((search.Page - 1) * search.PageSize)

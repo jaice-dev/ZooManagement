@@ -28,6 +28,13 @@ namespace ZooManagement
             var context = services.GetRequiredService<ZooManagementDbContext>();
             context.Database.EnsureCreated();
 
+            if (!context.Keepers.Any())
+            {
+                var keepers = SampleKeepers.GetKeepers();
+                context.Keepers.AddRange(keepers);
+                context.SaveChanges();
+            }
+            
             if (!context.AnimalTypes.Any())
             {
                 var animalTypes = SampleAnimalTypes.GetAnimalTypes();
@@ -48,6 +55,7 @@ namespace ZooManagement
                 context.Animals.AddRange(animals);
                 context.SaveChanges();
             }
+            
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
