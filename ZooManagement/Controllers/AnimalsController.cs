@@ -72,6 +72,28 @@ namespace ZooManagement.Controllers
             var count = _animals.CountAnimalRecords(searchRequest);
             return AnimalRecordsListResponse.Create(searchRequest, records, count);
         }
+
+        [HttpGet("records/{id}")]
+        public ActionResult<AnimalRecordResponse> GetAnimalRecordById([FromRoute] int id)
+        {
+            var record = _animals.GetRecordById(id);
+            return new AnimalRecordResponse(record);
+        }
+
+
+        // [HttpPost("records")]
+        // public IActionResult CreateRecord([FromBody] CreateRecordRequest newRecord)
+        // {
+        //     if (!ModelState.IsValid)
+        //     {
+        //         return BadRequest(ModelState);
+        //     }
+        //
+        //     var record = _animals.CreateRecord(newRecord);
+        //     var url = Url.Action("GetAnimalRecordById", new {id = record.Id});
+        //     var response = new AnimalRecordResponse(record);
+        //     return Created(url, response);
+        // }
         
     }
 }

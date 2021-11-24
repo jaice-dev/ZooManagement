@@ -17,6 +17,7 @@ namespace ZooManagement.Repositories
         int CountAnimalTypes(SearchRequest search);
         bool EnclosureHasSpace(int enclosureId);
         IEnumerable<AnimalRecord> GetAnimalRecords(SearchRequest search);
+        AnimalRecord GetRecordById(int id);
         int CountAnimalRecords(SearchRequest search);
     }
 
@@ -123,6 +124,13 @@ namespace ZooManagement.Repositories
                 .OrderBy(a => a.Id)
                 .Skip((search.Page - 1) * search.PageSize)
                 .Take(search.PageSize);
+        }
+
+        public AnimalRecord GetRecordById(int id)
+        {
+            return _context.AnimalRecords
+                .Include(a => a.AnimalType)
+                .Single(r => r.Id == id);
         }
 
         public int CountAnimalRecords(SearchRequest search)
