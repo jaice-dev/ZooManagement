@@ -45,4 +45,16 @@ namespace ZooManagement.Models.Response
             return new AnimalListResponse(search, animalModels, totalNumberOfItems);
         }
     }
+
+    public class AnimalTypeListResponse : ListResponse<AnimalTypeResponse>
+    {
+        private AnimalTypeListResponse(SearchRequest search, IEnumerable<AnimalTypeResponse> items, int totalNumberOfItems) 
+            : base(search, items, totalNumberOfItems, "types") { }
+        
+        public static AnimalTypeListResponse Create(SearchRequest search, IEnumerable<AnimalType> animals, int totalNumberOfItems)
+        {
+            var animalTypeModels = animals.Select(animal => new AnimalTypeResponse(animal));
+            return new AnimalTypeListResponse(search, animalTypeModels, totalNumberOfItems);
+        }
+    }
 }

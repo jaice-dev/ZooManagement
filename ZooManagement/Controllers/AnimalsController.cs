@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using ZooManagement.Models.Database;
 using ZooManagement.Models.Request;
 using ZooManagement.Models.Response;
 using ZooManagement.Repositories;
@@ -35,5 +36,14 @@ namespace ZooManagement.Controllers
             var animal = _animals.GetById(id);
             return new AnimalResponse(animal);
         }
+
+        [HttpGet("types")]
+        public ActionResult<AnimalTypeListResponse> GetAnimalTypes([FromQuery] SearchRequest searchRequest)
+        {
+            var animalTypes = _animals.GetAnimalTypes(searchRequest);
+            var animalTypesCount = _animals.CountAnimalTypes(searchRequest);
+            return AnimalTypeListResponse.Create(searchRequest, animalTypes, animalTypesCount);
+        }
+        
     }
 }

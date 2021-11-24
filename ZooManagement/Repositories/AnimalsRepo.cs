@@ -12,6 +12,8 @@ namespace ZooManagement.Repositories
         Animal GetById(int id);
         int Count(AnimalSearchRequest search);
         IEnumerable<Animal> Search(AnimalSearchRequest search);
+        IEnumerable<AnimalType> GetAnimalTypes(SearchRequest search);
+        int CountAnimalTypes(SearchRequest search);
     }
 
     public class AnimalsRepo : IAnimalsRepo
@@ -55,6 +57,23 @@ namespace ZooManagement.Repositories
                 .OrderBy(a => a.AnimalType.Classification)
                 .Skip((search.Page - 1) * search.PageSize)
                 .Take(search.PageSize);
+        }
+
+        public IEnumerable<AnimalType> GetAnimalTypes(SearchRequest search)
+        {
+            return _context.AnimalTypes
+                .OrderBy(t => t.Classification)
+                .Skip((search.Page - 1) * search.PageSize)
+                .Take(search.PageSize);
+        }
+
+        public int CountAnimalTypes(SearchRequest search)
+        {
+            return _context.AnimalTypes
+                .OrderBy(t => t.Classification)
+                .Skip((search.Page - 1) * search.PageSize)
+                .Take(search.PageSize)
+                .Count();
         }
     }
 }
